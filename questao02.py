@@ -1,7 +1,8 @@
 import numpy as np
 
 matriz = []
-determinante = 0
+matriz_inv = []
+matriz_cof = []
 
 def det(matriz, tamanho):
     determinante = 0
@@ -29,6 +30,24 @@ def det(matriz, tamanho):
     
     return determinante
 
+def cofa(matriz, tamanho):
+    for l in range(0, tamanho):
+        linha = []
+        for coluna in range(0, tamanho):
+            recorrencia = []
+
+            for i in range(0, tamanho):
+                recorrencia.append(matriz[i])
+
+            recorrencia = np.delete(recorrencia, (l), axis=0) #Apaga Linha
+            recorrencia = np.delete(recorrencia, (coluna), axis=1) #Apaga Coluna
+
+            elemento = det(recorrencia, tamanho -1) *((-1) **(2 +coluna +l))
+
+            linha.append(elemento)
+
+        matriz_cof.append(linha)
+
 tamanho = int(input(print("Informe o tamanho da matriz quadrada: ")))
 linha = coluna = tamanho
 
@@ -43,10 +62,21 @@ for l in range(0, tamanho):
 
 matriz = np.array(matriz)
 
-for linha in range(0, tamanho):
+cofa(matriz, tamanho) #cria a matriz dos cofatores
+
+transposta = list(zip(*matriz_cof)) #Cria a matriz transposta
+
+for l in range(0, tamanho):
+    linha = []
     for coluna in range(0, tamanho):
-        print(f'[{matriz [linha] [coluna]:^3}]', end ='')
+        elemento = transposta[l][coluna] *(1 /det(matriz, tamanho))
+
+        linha.append(elemento)
+    matriz_inv.append(linha)
+
+print('A  matriz inversa é: ')
+for l in range(0, tamanho):
+    for coluna in range(0, tamanho):
+        print(f'[{matriz_inv [l] [coluna]:^3}]', end ='')
 
     print()
-
-print(f'O determinante dessa matriz vale: {det(matriz, tamanho)}')
