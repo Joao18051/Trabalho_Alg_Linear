@@ -42,7 +42,8 @@ def cofa(matriz, tamanho):
             recorrencia = np.delete(recorrencia, (l), axis=0) #Apaga Linha
             recorrencia = np.delete(recorrencia, (coluna), axis=1) #Apaga Coluna
 
-            elemento = det(recorrencia, tamanho -1) *((-1) **(2 +coluna +l))
+            determinante = det(recorrencia, tamanho -1)
+            elemento = determinante *((-1) **(2 +coluna +l))
 
             linha.append(elemento)
 
@@ -62,21 +63,26 @@ for l in range(0, tamanho):
 
 matriz = np.array(matriz)
 
-cofa(matriz, tamanho) #cria a matriz dos cofatores
+if(det(matriz, tamanho)):
 
-transposta = list(zip(*matriz_cof)) #Cria a matriz transposta
+    cofa(matriz, tamanho) #cria a matriz dos cofatores
 
-for l in range(0, tamanho):
-    linha = []
-    for coluna in range(0, tamanho):
-        elemento = transposta[l][coluna] *(1 /det(matriz, tamanho))
+    transposta = list(zip(*matriz_cof)) #Cria a matriz transposta
 
-        linha.append(elemento)
-    matriz_inv.append(linha)
+    for l in range(0, tamanho):
+        linha = []
+        for coluna in range(0, tamanho):
+            elemento = transposta[l][coluna] *(1 /det(matriz, tamanho))
 
-print('A  matriz inversa é: ')
-for l in range(0, tamanho):
-    for coluna in range(0, tamanho):
-        print(f'[{matriz_inv [l] [coluna]:^3}]', end ='')
+            linha.append(elemento)
+        matriz_inv.append(linha)
 
-    print()
+    print('A  matriz inversa é: ')
+    for l in range(0, tamanho):
+        for coluna in range(0, tamanho):
+            print(f'[{matriz_inv [l] [coluna]:^3}]', end ='')
+
+        print()
+else:
+    print(f'O determinante dessa matriz vale {det(matriz, tamanho)}, mas a inversa existe apenas para determinantes != de {det(matriz, tamanho)}')
+
