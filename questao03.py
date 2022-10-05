@@ -49,7 +49,7 @@ def cofa(matriz, tamanho):
 
         matriz_cof.append(linha)
 
-tamanho = int(input(print("Informe o tamanho da matriz quadrada: ")))
+tamanho = int(input("Informe o tamanho da matriz quadrada: "))
 linha = coluna = tamanho
 
 for l in range(0, tamanho):
